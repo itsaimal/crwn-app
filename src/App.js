@@ -2,7 +2,7 @@
 import './App.css';
 import Homepage from './pages/Homepage';
 import ShopPage from "./pages/shop/Shop"
-import {Switch,Route} from "react-router-dom"
+import {Switch,Route,Redirect} from "react-router-dom"
 import Header from "./components/header/Header"
 import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 import {auth, createUserProfileDocument} from "./firebase/firebase"
@@ -52,7 +52,7 @@ const {setCurrentUser} = this.props;
      
         <Route  path="/shop" component={ShopPage} />
 
-<Route path="/signin" component={SignInAndSignUp}/>
+<Route exact path="/signin" render={() => this.props.currentUser ? (<Redirect to="/"/>) : (<SignInAndSignUp/>)}/>
         
      
      
@@ -63,10 +63,14 @@ const {setCurrentUser} = this.props;
   );
 }
 }
+ 
 
+const mapStateToProps = ({user}) => ({
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
 setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
-export default connect(null,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

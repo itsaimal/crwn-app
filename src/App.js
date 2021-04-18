@@ -11,9 +11,14 @@ import {setCurrentUser} from "./redux/user/user.actions"
 import {selectCurrentUser} from "./redux/user/user.selectors"
 //using it for multiple
 import {createStructuredSelector} from "reselect"
+import styled from "styled-components"
 
 import {connect} from "react-redux"
 import CheckoutPage from "./pages/checkout/CheckoutPage"
+
+
+
+
   
 
 class App extends React.Component {
@@ -40,6 +45,7 @@ const {setCurrentUser} = this.props;
       }
 
       setCurrentUser( userAuth );
+     
     });
   }
 

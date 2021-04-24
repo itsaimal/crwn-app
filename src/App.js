@@ -6,7 +6,7 @@ import {Switch,Route,Redirect} from "react-router-dom"
 import Header from "./components/header/Header"
 import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {selectCurrentUser} from "./redux/user/user.selectors"
 //using it for multiple
@@ -22,19 +22,12 @@ import {checkUserSession} from "./redux/user/user.actions"
 
   
 
-class App extends React.Component {
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    const { checkUserSession } = this.props;
-    checkUserSession();
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
+const App = ({ checkUserSession, currentUser }) =>  {
+  
+  useEffect(() => {
+ checkUserSession()
+  }, [checkUserSession])
+  
     return (
       <div>
         <Header />
@@ -46,7 +39,7 @@ class App extends React.Component {
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser ? (
+              currentUser ? (
                 <Redirect to='/' />
               ) : (
                 <SignInAndSignUp />
@@ -57,7 +50,7 @@ class App extends React.Component {
       </div>
     );
   }
-}
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import CollectionsOverviewContainer from "../../components/collections-overview/CollectionsOverview.container"
 import {Route} from "react-router-dom"
 import CollectionPageContainer from "../collection/Collection.container"
@@ -13,20 +13,22 @@ import {fetchCollectionsStart} from "../../redux/shop/shop.actions"
 
  
 
-class ShopPage extends React.Component {
+const ShopPage = ({fetchCollectionsStart,match}) => {
 
 
  
 
-  componentDidMount(){
-   const {fetchCollectionsStart} = this.props;
-   fetchCollectionsStart();
-  }
+  useEffect(()=> {
+    fetchCollectionsStart();
+  },[ fetchCollectionsStart])
+   
+  
+  
 
 
-render(){
 
-  const {match} = this.props;
+
+  
   
 
   return (
@@ -39,7 +41,7 @@ render(){
   </div>
   )
 }
-} 
+
 
 
 
